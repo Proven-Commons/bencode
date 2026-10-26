@@ -1,0 +1,34 @@
+{
+  "challenge_module": "Spec",
+  "solution_module": "Proofs",
+  "theorem_names": [
+    "Spec.digits_digits",
+    "Spec.digits_ne_nil",
+    "Spec.encode_bytes_layout",
+    "Spec.encode_int_layout",
+    "Spec.encode_list_layout",
+    "Spec.encode_dict_layout",
+    "Spec.encode_ne_nil",
+    "Spec.encodeList_eq_flatten",
+    "Spec.decode_int_example",
+    "Spec.decode_negative_int_example",
+    "Spec.decode_bytes_example",
+    "Spec.decode_empty_bytes_example",
+    "Spec.decode_list_example",
+    "Spec.decode_dict_example",
+    "Spec.rejects_leading_zero_int",
+    "Spec.rejects_negative_zero",
+    "Spec.rejects_leading_zero_length",
+    "Spec.rejects_unsorted_keys",
+    "Spec.rejects_trailing_bytes",
+    "Spec.rejects_truncated_list",
+    "Spec.rejects_short_bytes",
+    "Spec.rejects_bad_int",
+    "Spec.rejects_empty"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,16 @@
+name = "bencode"
+version = "0.1.0"
+defaultTargets = ["bencode"]
+
+[[lean_lib]]
+name = "Bencode"
+
+[[lean_lib]]
+name = "Spec"
+
+[[lean_lib]]
+name = "Proofs"
+
+[[lean_exe]]
+name = "bencode"
+root = "Main"

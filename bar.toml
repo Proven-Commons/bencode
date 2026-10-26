@@ -1,0 +1,40 @@
+# Read by bar/check.py in Proven-Commons/mission.
+# See playbook/verified-bar.md there for what each field means.
+
+[project]
+name = "bencode"
+# "in-progress" until every bar item passes, then "verified".
+status = "in-progress"
+page = "README.md"
+# GitHub handles of everyone who wrote the specification.
+spec_authors = ["orda-aska"]
+# The program people run. A change to it voids the approval.
+entry_points = ["Main.lean"]
+
+[spec]
+files = ["SPEC.md", "Spec.lean", "Spec/Defs.lean"]
+# The code under proof: the functions the statements are about.
+code = [
+  # The data type the statements are about, its constructors, and the byte
+  # alphabet; then the functions.
+  "Bencode.Bytes", "Bencode.Value",
+  "Bencode.Value.int", "Bencode.Value.bytes", "Bencode.Value.list", "Bencode.Value.dict",
+  "Bencode.bytesCmp", "Bencode.bytesLt",
+  "Bencode.isDigit", "Bencode.digitChar", "Bencode.digitsAux", "Bencode.digits",
+  "Bencode.encodeInt", "Bencode.encodeBytes",
+  "Bencode.encode", "Bencode.encodeList", "Bencode.encodePairs",
+  "Bencode.scanNat", "Bencode.readNat", "Bencode.readInt", "Bencode.readBytes",
+  "Bencode.decode", "Bencode.decodeAux", "Bencode.decodeItems", "Bencode.decodePairs",
+]
+
+# One entry per approval, added in a pull request the reviewer approves.
+# [[spec.approval]]
+# reviewer = "github-handle"
+# date = "2026-11-02"
+# sha256 = "..."
+# record = "https://github.com/Proven-Commons/bencode/pull/<n>"
+
+[tests]
+results = "tests/TEST-RESULTS.md"
+command = "python3 tests/run_tests.py"
+files = ["tests/run_tests.py", "tests/reference.py"]
