@@ -15,7 +15,11 @@ entry_points = ["Main.lean"]
 files = ["SPEC.md", "Spec.lean", "Spec/Defs.lean"]
 # The code under proof: the functions the statements are about.
 code = [
-  "Bencode.Value", "Bencode.bytesCmp", "Bencode.bytesLt",
+  # The data type the statements are about, its constructors, and the byte
+  # alphabet; then the functions.
+  "Bencode.Bytes", "Bencode.Value",
+  "Bencode.Value.int", "Bencode.Value.bytes", "Bencode.Value.list", "Bencode.Value.dict",
+  "Bencode.bytesCmp", "Bencode.bytesLt",
   "Bencode.isDigit", "Bencode.digitChar", "Bencode.digitsAux", "Bencode.digits",
   "Bencode.encodeInt", "Bencode.encodeBytes",
   "Bencode.encode", "Bencode.encodeList", "Bencode.encodePairs",
