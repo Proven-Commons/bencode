@@ -1,16 +1,18 @@
 name = "bencode"
 version = "0.1.0"
 license = "Apache-2.0"
-defaultTargets = ["bencode"]
+defaultTargets = ["Bencode", "BencodeSpec", "BencodeProofs", "bencode"]
 
 [[lean_lib]]
 name = "Bencode"
 
 [[lean_lib]]
-name = "Spec"
+name = "BencodeSpec"
+roots = ["Bencode.Spec"]
 
 [[lean_lib]]
-name = "Proofs"
+name = "BencodeProofs"
+roots = ["Bencode.Proofs"]
 
 [[lean_exe]]
 name = "bencode"
