@@ -6,7 +6,7 @@
   `lake comparator` checks that each one proves exactly the statement
   written here. The `sorry` below is expected in this file only.
 
-  The definitions the statements use are in `Spec/Defs.lean`, which is
+  The definitions the statements use are in `Bencode/Spec/Defs.lean`, which is
   part of the specification too.
 -/
 
