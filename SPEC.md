@@ -1,7 +1,7 @@
 # Specification: bencode, BEP 3, first slice
 
-This is the specification a reviewer approves, together with `Spec.lean`,
-`Spec/Defs.lean`, and the whole project page. It says what the library
+This is the specification a reviewer approves, together with `Bencode/Spec.lean`,
+`Bencode/Spec/Defs.lean`, and the whole project page. It says what the library
 does, what it refuses, and which theorem backs each public claim.
 
 ## Scope
@@ -44,33 +44,33 @@ The empty input is refused: it is not the empty list, which is `le`.
 
 ## What must always hold
 
-Each property below is a theorem in `Spec.lean`.
+Each property below is a theorem in `Bencode/Spec.lean`.
 
 | Property | Theorem |
 |----------|---------|
-| Every byte of a decimal form is a digit. | `Spec.digits_digits` |
-| A decimal form always has at least one digit. | `Spec.digits_ne_nil` |
-| A byte string is its length in decimal, a colon, then the bytes. | `Spec.encode_bytes_layout` |
-| An integer is `i`, its decimal form, then `e`. | `Spec.encode_int_layout` |
-| A list is `l`, its items encoded in turn, then `e`. | `Spec.encode_list_layout` |
-| A dictionary is `d`, its pairs in turn, key before value, then `e`. | `Spec.encode_dict_layout` |
-| Every value's encoding is not empty. | `Spec.encode_ne_nil` |
-| A list's items encoded in turn are the flattened encodings of the items. | `Spec.encodeList_eq_flatten` |
-| `i42e` is accepted. | `Spec.decode_int_example` |
-| `i-42e` is accepted. | `Spec.decode_negative_int_example` |
-| `4:spam` is accepted. | `Spec.decode_bytes_example` |
-| `0:` is accepted. | `Spec.decode_empty_bytes_example` |
-| The BEP 3 list example, `l4:spami42ee`, is accepted. | `Spec.decode_list_example` |
-| The BEP 3 dictionary example, `d3:bar4:spam3:fooi42ee`, is accepted. | `Spec.decode_dict_example` |
-| `i03e` is refused. | `Spec.rejects_leading_zero_int` |
-| `i-0e` is refused. | `Spec.rejects_negative_zero` |
-| `03:abc` is refused. | `Spec.rejects_leading_zero_length` |
-| `d3:fooi42e3:bar4:spame` is refused: keys out of order. | `Spec.rejects_unsorted_keys` |
-| `1:a1:b` is refused: bytes after a value. | `Spec.rejects_trailing_bytes` |
-| `l4:spam` is refused: a list with no `e`. | `Spec.rejects_truncated_list` |
-| `9:spam` is refused: a length past the end. | `Spec.rejects_short_bytes` |
-| `i3xe` is refused: not a decimal form. | `Spec.rejects_bad_int` |
-| The empty input is refused. | `Spec.rejects_empty` |
+| Every byte of a decimal form is a digit. | `Bencode.Spec.digits_digits` |
+| A decimal form always has at least one digit. | `Bencode.Spec.digits_ne_nil` |
+| A byte string is its length in decimal, a colon, then the bytes. | `Bencode.Spec.encode_bytes_layout` |
+| An integer is `i`, its decimal form, then `e`. | `Bencode.Spec.encode_int_layout` |
+| A list is `l`, its items encoded in turn, then `e`. | `Bencode.Spec.encode_list_layout` |
+| A dictionary is `d`, its pairs in turn, key before value, then `e`. | `Bencode.Spec.encode_dict_layout` |
+| Every value's encoding is not empty. | `Bencode.Spec.encode_ne_nil` |
+| A list's items encoded in turn are the flattened encodings of the items. | `Bencode.Spec.encodeList_eq_flatten` |
+| `i42e` is accepted. | `Bencode.Spec.decode_int_example` |
+| `i-42e` is accepted. | `Bencode.Spec.decode_negative_int_example` |
+| `4:spam` is accepted. | `Bencode.Spec.decode_bytes_example` |
+| `0:` is accepted. | `Bencode.Spec.decode_empty_bytes_example` |
+| The BEP 3 list example, `l4:spami42ee`, is accepted. | `Bencode.Spec.decode_list_example` |
+| The BEP 3 dictionary example, `d3:bar4:spam3:fooi42ee`, is accepted. | `Bencode.Spec.decode_dict_example` |
+| `i03e` is refused. | `Bencode.Spec.rejects_leading_zero_int` |
+| `i-0e` is refused. | `Bencode.Spec.rejects_negative_zero` |
+| `03:abc` is refused. | `Bencode.Spec.rejects_leading_zero_length` |
+| `d3:fooi42e3:bar4:spame` is refused: keys out of order. | `Bencode.Spec.rejects_unsorted_keys` |
+| `1:a1:b` is refused: bytes after a value. | `Bencode.Spec.rejects_trailing_bytes` |
+| `l4:spam` is refused: a list with no `e`. | `Bencode.Spec.rejects_truncated_list` |
+| `9:spam` is refused: a length past the end. | `Bencode.Spec.rejects_short_bytes` |
+| `i3xe` is refused: not a decimal form. | `Bencode.Spec.rejects_bad_int` |
+| The empty input is refused. | `Bencode.Spec.rejects_empty` |
 
 An input is "accepted" in these statements when the value read from it is
 written back as the same bytes, stated as `(decode s).map encode = some s`.

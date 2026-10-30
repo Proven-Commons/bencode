@@ -8,33 +8,33 @@ Status: in progress. The specification has not yet been approved by a reviewer a
 
 ## What is proved
 
-The statements are in `Spec.lean`, the definitions they use in `Spec/Defs.lean`, and the proofs in `Proofs.lean`. Each claim below names the theorem behind it.
+The statements are in `Bencode/Spec.lean`, the definitions they use in `Bencode/Spec/Defs.lean`, and the proofs in `Bencode/Proofs.lean`. Each claim below names the theorem behind it.
 
 | Claim | Theorem |
 |-------|---------|
-| Every byte of a decimal form is a digit. | `Spec.digits_digits` |
-| A decimal form always has at least one digit, so it is never empty. | `Spec.digits_ne_nil` |
-| A byte string is its length in decimal, a colon, then the bytes. | `Spec.encode_bytes_layout` |
-| An integer is `i`, its decimal form, then `e`. | `Spec.encode_int_layout` |
-| A list is `l`, its items encoded in turn, then `e`. | `Spec.encode_list_layout` |
-| A dictionary is `d`, its pairs encoded in turn, key before value, then `e`. | `Spec.encode_dict_layout` |
-| Every value's encoding is not empty, so an encoder that writes nothing fails here first. | `Spec.encode_ne_nil` |
-| A list's items encoded in turn are the flattened encodings of the items. | `Spec.encodeList_eq_flatten` |
-| `i42e` is accepted and reads back as itself. | `Spec.decode_int_example` |
-| `i-42e` is accepted and reads back as itself. | `Spec.decode_negative_int_example` |
-| `4:spam` is accepted and reads back as itself. | `Spec.decode_bytes_example` |
-| `0:` is accepted and reads back as itself. | `Spec.decode_empty_bytes_example` |
-| The BEP 3 list example, `l4:spami42ee`, is accepted and reads back as itself. | `Spec.decode_list_example` |
-| The BEP 3 dictionary example, `d3:bar4:spam3:fooi42ee`, is accepted and reads back as itself. | `Spec.decode_dict_example` |
-| `i03e` is refused, as the canonical form requires. | `Spec.rejects_leading_zero_int` |
-| `i-0e` is refused. | `Spec.rejects_negative_zero` |
-| `03:abc` is refused: a length with a leading zero. | `Spec.rejects_leading_zero_length` |
-| `d3:fooi42e3:bar4:spame` is refused: keys out of order. | `Spec.rejects_unsorted_keys` |
-| `1:a1:b` is refused: bytes after a value. | `Spec.rejects_trailing_bytes` |
-| `l4:spam` is refused: a list with no `e`. | `Spec.rejects_truncated_list` |
-| `9:spam` is refused: a length past the end. | `Spec.rejects_short_bytes` |
-| `i3xe` is refused: not a decimal form. | `Spec.rejects_bad_int` |
-| The empty input is refused. | `Spec.rejects_empty` |
+| Every byte of a decimal form is a digit. | `Bencode.Spec.digits_digits` |
+| A decimal form always has at least one digit, so it is never empty. | `Bencode.Spec.digits_ne_nil` |
+| A byte string is its length in decimal, a colon, then the bytes. | `Bencode.Spec.encode_bytes_layout` |
+| An integer is `i`, its decimal form, then `e`. | `Bencode.Spec.encode_int_layout` |
+| A list is `l`, its items encoded in turn, then `e`. | `Bencode.Spec.encode_list_layout` |
+| A dictionary is `d`, its pairs encoded in turn, key before value, then `e`. | `Bencode.Spec.encode_dict_layout` |
+| Every value's encoding is not empty, so an encoder that writes nothing fails here first. | `Bencode.Spec.encode_ne_nil` |
+| A list's items encoded in turn are the flattened encodings of the items. | `Bencode.Spec.encodeList_eq_flatten` |
+| `i42e` is accepted and reads back as itself. | `Bencode.Spec.decode_int_example` |
+| `i-42e` is accepted and reads back as itself. | `Bencode.Spec.decode_negative_int_example` |
+| `4:spam` is accepted and reads back as itself. | `Bencode.Spec.decode_bytes_example` |
+| `0:` is accepted and reads back as itself. | `Bencode.Spec.decode_empty_bytes_example` |
+| The BEP 3 list example, `l4:spami42ee`, is accepted and reads back as itself. | `Bencode.Spec.decode_list_example` |
+| The BEP 3 dictionary example, `d3:bar4:spam3:fooi42ee`, is accepted and reads back as itself. | `Bencode.Spec.decode_dict_example` |
+| `i03e` is refused, as the canonical form requires. | `Bencode.Spec.rejects_leading_zero_int` |
+| `i-0e` is refused. | `Bencode.Spec.rejects_negative_zero` |
+| `03:abc` is refused: a length with a leading zero. | `Bencode.Spec.rejects_leading_zero_length` |
+| `d3:fooi42e3:bar4:spame` is refused: keys out of order. | `Bencode.Spec.rejects_unsorted_keys` |
+| `1:a1:b` is refused: bytes after a value. | `Bencode.Spec.rejects_trailing_bytes` |
+| `l4:spam` is refused: a list with no `e`. | `Bencode.Spec.rejects_truncated_list` |
+| `9:spam` is refused: a length past the end. | `Bencode.Spec.rejects_short_bytes` |
+| `i3xe` is refused: not a decimal form. | `Bencode.Spec.rejects_bad_int` |
+| The empty input is refused. | `Bencode.Spec.rejects_empty` |
 
 The command-line tool in `Main.lean` calls these functions directly. The statements about the decoder are single inputs, checked in the kernel; the tests cover it on far more.
 
@@ -70,14 +70,14 @@ python3 tests/run_tests.py
 
 The tests need no package outside the Python standard library. When `bencode.py` is installed (`pip install bencode.py`), the script also checks that the two oracles agree and names its version in the record.
 
-`lake comparator --paranoid` builds the statements and the proofs in a sandbox. It checks that each theorem in `Proofs.lean` proves exactly the statement in `Spec.lean`, using only the axioms `propext`, `Classical.choice`, and `Quot.sound`, and replays it through every kernel shipped with Lean. The test script builds the tool, compares it with the oracle on the inputs the record names, and rewrites `tests/TEST-RESULTS.md`.
+`lake comparator --paranoid` builds the statements and the proofs in a sandbox. It checks that each theorem in `Bencode/Proofs.lean` proves exactly the statement in `Bencode/Spec.lean`, using only the axioms `propext`, `Classical.choice`, and `Quot.sound`, and replays it through every kernel shipped with Lean. The test script builds the tool, compares it with the oracle on the inputs the record names, and rewrites `tests/TEST-RESULTS.md`.
 
 ## Layout
 
 - `Bencode.lean`: the code under proof, the encoder and the decoder.
-- `Spec.lean`: the statements, with `sorry` for proofs. A reviewer approves this file.
-- `Spec/Defs.lean`: the definitions the statements use, with checks against the BEP 3 examples.
-- `Proofs.lean`: the proofs, under the same names.
+- `Bencode/Spec.lean`: the statements, with `sorry` for proofs. A reviewer approves this file.
+- `Bencode/Spec/Defs.lean`: the definitions the statements use, with checks against the BEP 3 examples.
+- `Bencode/Proofs.lean`: the proofs, under the same names.
 - `Main.lean`: the command-line tool the tests drive.
 - `lakefile.toml`: the build. It names the package, its libraries and executable, and the default targets, and sets nothing else.
 - `comparator.json`: which theorems `lake comparator` checks, and which axioms it allows.
